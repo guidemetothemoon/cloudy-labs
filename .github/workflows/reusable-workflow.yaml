@@ -7,33 +7,16 @@ on:
         description: GitHub deployment environment
         required: true
         type: string
-    secrets:
-      MY_SECRETY_SECRET:
-        description: Secret to validate
-        required: true
+    #secrets:
+    #  MY_SECRETY_SECRET:
+    #    description: Secret to validate
+    #    required: true
 jobs:
   validate-secret:
     name: Validate deployment environment secret
     runs-on: ubuntu-latest
     environment: ${{ inputs.deployment-environment }}
     steps:
-      - name: Check if secret is set and has expected value
-        shell: bash
-        run: |
-          if [ -z "${{ secrets.MY_SECRETY_SECRET }}" ]; then
-            echo "MY_SECRETY_SECRET is not set."
-            exit 1
-          fi
-          if [ "${{ secrets.MY_SECRETY_SECRET }}" != "meowfoobar" ]; then
-            echo "MY_SECRETY_SECRET does not have the expected value."
-            exit 1
-          fi
-          echo "MY_SECRETY_SECRET is set and has the expected value."
-          exit 0
-      - name: Validate deployment environment variable
-        shell: bash
-        run: |
-          echo "Deployment environment variable: ${{ vars.MY_VAR_TEST }}"
       - name: Check if repo secret is set and has expected value
         shell: bash
         run: |
@@ -47,3 +30,22 @@ jobs:
           fi
           echo "MY_REPO_SECRET is set and has the expected value."
           exit 0
+      - name: Validate deployment environment variable
+        shell: bash
+        run: |
+          echo "Deployment environment variable: ${{ vars.MY_VAR_TEST }}"
+      - name: Check if secret is set and has expected value
+        shell: bash
+        run: |
+          if [ -z "${{ secrets.MY_SECRETY_SECRET }}" ]; then
+            echo "MY_SECRETY_SECRET is not set."
+            exit 1
+          fi
+          if [ "${{ secrets.MY_SECRETY_SECRET }}" != "meowfoobar" ]; then
+            echo "MY_SECRETY_SECRET does not have the expected value."
+            exit 1
+          fi
+          echo "MY_SECRETY_SECRET is set and has the expected value."
+          exit 0
+      
+      
