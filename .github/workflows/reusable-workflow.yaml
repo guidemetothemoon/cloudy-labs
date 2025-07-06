@@ -1,0 +1,32 @@
+---
+name: Reusable workflow - Validate deployment environment secret
+on:
+  workflow_call:
+    inputs:
+      deployment-environment:
+        description: GitHub deployment environment
+        required: true
+        type: string
+    secrets:
+      MY_SECRETY_SECRET:
+        description: Secret to validate
+        required: true
+jobs:
+  validate-secret:
+    name: Validate deployment environment secret
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.deployment-environment }}
+    steps:
+      - name: Check if secret is set and has expected value
+        shell: bash
+        run: |
+          if [ -z "${{ secrets.MY_SECRETY_SECRET }}" ]; then
+            echo "MY_SECRETY_SECRET is not set."
+            exit 1
+          fi
+          if [ "${{ secrets.MY_SECRETY_SECRET }}" != "meowfoobar" ]; then
+            echo "MY_SECRETY_SECRET does not have the expected value."
+            exit 1
+          fi
+          echo "MY_SECRETY_SECRET is set and has the expected value."
+          exit 0
