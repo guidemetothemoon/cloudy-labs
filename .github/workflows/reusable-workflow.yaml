@@ -30,3 +30,7 @@ jobs:
           fi
           echo "MY_SECRETY_SECRET is set and has the expected value."
           exit 0
+      - name: Validate deployment environment variable
+        shell: bash
+        run: |
+          echo "Deployment environment variable: ${{ vars.MY_VAR_TEST }}"
