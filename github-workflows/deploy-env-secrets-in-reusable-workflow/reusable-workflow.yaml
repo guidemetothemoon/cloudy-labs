@@ -1,0 +1,29 @@
+---
+name: Reusable workflow - Validate deployment environment secret
+on:
+  workflow_call:
+    inputs:
+      deployment-environment:
+        description: GitHub deployment environment
+        required: true
+        type: string
+jobs:
+  validate-secret:
+    name: Validate deployment environment secret
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.deployment-environment }}
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Check if repo secret is set and has expected value
+        run: bash ${GITHUB_WORKSPACE}/util-scripts/validate-input.sh "${{ secrets.MY_REPO_SECRET }}" "bla"
+      
+      - name: Validate repository and deployment environment variables
+        shell: bash
+        run: |
+          echo "Deployment environment variable: ${{ vars.MY_VAR_TEST }}"
+          echo "Repository variable: ${{ vars.MY_REPO_VAR_TEST }}"
+
+      - name: Check if deployment environment secret is set and has expected value
+        shell: bash
+        run: bash ${GITHUB_WORKSPACE}/util-scripts/validate-input.sh "${{ secrets.MY_SECRETY_SECRET }}" "meowfoobar"
