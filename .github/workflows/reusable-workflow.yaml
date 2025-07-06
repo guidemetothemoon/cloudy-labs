@@ -14,7 +14,7 @@ jobs:
     environment: ${{ inputs.deployment-environment }}
     steps:
       - name: Check if repo secret is set and has expected value
-        run: bash ./util-scripts/validate-input.sh "${{ secrets.MY_REPO_SECRET }}" "bla"
+        run: bash ${GITHUB_WORKSPACE}/util-scripts/validate-input.sh "${{ secrets.MY_REPO_SECRET }}" "bla"
       
       - name: Validate repository and deployment environment variables
         shell: bash
@@ -24,4 +24,4 @@ jobs:
 
       - name: Check if deployment environment secret is set and has expected value
         shell: bash
-        run: bash ./util-scripts/validate-input.sh "${{ secrets.MY_SECRETY_SECRET }}" "meowfoobar"
+        run: bash ${GITHUB_WORKSPACE}/util-scripts/validate-input.sh "${{ secrets.MY_SECRETY_SECRET }}" "meowfoobar"
