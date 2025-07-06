@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.deployment-environment }}
     steps:
+      - uses: actions/checkout@v4.2.2
+
       - name: Check if repo secret is set and has expected value
         run: bash ${GITHUB_WORKSPACE}/util-scripts/validate-input.sh "${{ secrets.MY_REPO_SECRET }}" "bla"
       
