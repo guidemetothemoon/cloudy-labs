@@ -7,10 +7,10 @@ on:
         description: GitHub deployment environment
         required: true
         type: string
-    #secrets:
-    #  MY_SECRETY_SECRET:
-    #    description: Secret to validate
-    #    required: true
+    secrets:
+      MY_SECRETY_SECRET:
+        description: Secret to validate
+        required: true
 jobs:
   validate-secret:
     name: Validate deployment environment secret
@@ -34,3 +34,16 @@ jobs:
         shell: bash
         run: |
           echo "Deployment environment variable: ${{ vars.MY_VAR_TEST }}"
+      - name: Check if repo secret is set and has expected value
+        shell: bash
+        run: |
+          if [ -z "${{ secrets.MY_REPO_SECRET }}" ]; then
+            echo "MY_REPO_SECRET is not set."
+            exit 1
+          fi
+          if [ "${{ secrets.MY_REPO_SECRET }}" != "bla" ]; then
+            echo "MY_REPO_SECRET does not have the expected value."
+            exit 1
+          fi
+          echo "MY_REPO_SECRET is set and has the expected value."
+          exit 0

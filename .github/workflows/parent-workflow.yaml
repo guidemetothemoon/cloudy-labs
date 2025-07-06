@@ -15,5 +15,5 @@ jobs:
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       deployment-environment: dev
-    #secrets:
-    #  MY_SECRETY_SECRET: ${{ secrets.MY_SECRETY_SECRET }}
+    secrets:
+      MY_SECRETY_SECRET: ${{ secrets.MY_SECRETY_SECRET }}
