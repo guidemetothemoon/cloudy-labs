@@ -7,10 +7,6 @@ on:
         description: GitHub deployment environment
         required: true
         type: string
-    #secrets:
-    #  MY_SECRETY_SECRET:
-    #    description: Secret to validate
-    #    required: true
 jobs:
   validate-secret:
     name: Validate deployment environment secret
@@ -18,34 +14,14 @@ jobs:
     environment: ${{ inputs.deployment-environment }}
     steps:
       - name: Check if repo secret is set and has expected value
-        shell: bash
-        run: |
-          if [ -z "${{ secrets.MY_REPO_SECRET }}" ]; then
-            echo "MY_REPO_SECRET is not set."
-            exit 1
-          fi
-          if [ "${{ secrets.MY_REPO_SECRET }}" != "bla" ]; then
-            echo "MY_REPO_SECRET does not have the expected value."
-            exit 1
-          fi
-          echo "MY_REPO_SECRET is set and has the expected value."
-          exit 0
-      - name: Validate deployment environment variable
+        run: bash ./util-scripts/validate-input.sh "${{ secrets.MY_REPO_SECRET }}" "bla"
+      
+      - name: Validate repository and deployment environment variables
         shell: bash
         run: |
           echo "Deployment environment variable: ${{ vars.MY_VAR_TEST }}"
-      - name: Check if secret is set and has expected value
+          echo "Repository variable: ${{ vars.MY_REPO_VAR_TEST }}"
+
+      - name: Check if deployment environment secret is set and has expected value
         shell: bash
-        run: |
-          if [ -z "${{ secrets.MY_SECRETY_SECRET }}" ]; then
-            echo "MY_SECRETY_SECRET is not set."
-            exit 1
-          fi
-          if [ "${{ secrets.MY_SECRETY_SECRET }}" != "meowfoobar" ]; then
-            echo "MY_SECRETY_SECRET does not have the expected value."
-            exit 1
-          fi
-          echo "MY_SECRETY_SECRET is set and has the expected value."
-          exit 0
-      
-      
+        run: bash ./util-scripts/validate-input.sh "${{ secrets.MY_SECRETY_SECRET }}" "meowfoobar"

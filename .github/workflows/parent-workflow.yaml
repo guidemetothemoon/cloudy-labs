@@ -16,4 +16,3 @@ jobs:
     with:
       deployment-environment: dev
     secrets: inherit
-      #MY_SECRETY_SECRET: ${{ secrets.MY_SECRETY_SECRET }}
