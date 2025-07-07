@@ -1,7 +1,7 @@
 # Introduction
 
 This folder contains examples of how you can reference variables and secrets that are defined in GitHub Deployment Environments and regular repository values, in a reusable workflow.
-More information about this use case is outlined in following blog post: TBA
+More information about this use case is outlined in following blog post: [Tech Bits and Bobs #1 - Reference GitHub Repository and Deployment Environment Secrets and Variables in Reusable Workflows](https://www.kristhecodingunicorn.com/post/github-secrets-and-vars-in-reusable-workflow).
 
 ## Testing
 
